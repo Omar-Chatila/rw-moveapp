@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 # showcase for importing functions from another .py file (in this case from "./app/getGeoDataFrame.py")
 from app.getGeoDataFrame import get_GDF
 
-
 class App(object):
 
     def __init__(self, moveapps_io):

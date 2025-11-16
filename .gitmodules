@@ -1,0 +1,3 @@
+[submodule "random-walk-python"]
+	path = random-walk-python
+	url = git@gitlab.tu-dortmund.de:ls11ae/research/random-walk-python.git
