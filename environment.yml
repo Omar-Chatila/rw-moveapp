@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - python=3.11
+  - numpy
   - pandas
   - matplotlib
   - geopandas
@@ -12,4 +13,4 @@ dependencies:
   - deprecated
   - pip
   - pip:
-        - -e ./random-walk-python
+      - -e ./random-walk-python
