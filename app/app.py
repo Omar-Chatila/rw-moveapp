@@ -3,6 +3,7 @@ from sdk.moveapps_io import MoveAppsIo
 from movingpandas import TrajectoryCollection
 import logging
 import matplotlib.pyplot as plt
+import numpy as np
 
 # showcase for importing functions from another .py file (in this case from "./app/getGeoDataFrame.py")
 from app.getGeoDataFrame import get_GDF
@@ -14,6 +15,15 @@ class App(object):
 
     @hook_impl
     def execute(self, data: TrajectoryCollection, config: dict) -> TrajectoryCollection:
+        from random_walk_package.core.BrownianWalker import BrownianWalker
+
+        with BrownianWalker(T=20, W=30, H=30) as walker:
+            walker.generate(start_x=15, start_y=15)
+
+            # Mehrere Zielpunkte für multistep
+            steps = np.array([[10, 10], [20, 20], [5, 25], [25, 5]], dtype=np.int32)
+            full_path = walker.multistep_walk(steps, plot=True)
+            print(full_path)
 
         logging.info(f'Welcome to the {config}')
 
