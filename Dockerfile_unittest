@@ -27,12 +27,17 @@ RUN apt-get update && apt-get install -y \
 ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 
-# Copy the full CMake + C project
+# Copy the full random walk package
 COPY random-walk-python/ ./random-walk-python/
 
-# Install dependencies including editable install
-RUN conda env create --prefix ${ENV_PREFIX} --file environment.yml && \
+# Step 1: create environment without installing local package
+RUN rm -rf ${ENV_PREFIX} && \
+    conda env create --prefix ${ENV_PREFIX} --file environment.yml && \
     conda clean --all --yes
 
-# Run unittests inside the env
+
+# Step 2: install local package editable inside environment
+RUN conda run --prefix ${ENV_PREFIX} pip install --editable ./random-walk-python
+
+# Step 3: run unittests inside the environment
 RUN conda run --no-capture-output --prefix ${ENV_PREFIX} python3 -m unittest
