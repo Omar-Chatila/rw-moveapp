@@ -10,11 +10,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Configure Git to rewrite SSH → HTTPS for GitLab
-        run: |
-          git config --global url."https://${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
-          
-      - name: Configure GitLab credentials
+      - name: Configure GitLab auth rewrite
         run: |
           git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
           git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "https://gitlab.tu-dortmund.de/"
