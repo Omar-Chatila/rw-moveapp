@@ -13,10 +13,11 @@ jobs:
       - name: Configure Git to rewrite SSH → HTTPS for GitLab
         run: |
           git config --global url."https://${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
-      - name: Add GitLab credentials for submodules
+          
+      - name: Configure GitLab credentials
         run: |
-          git config --global url."https://${{ secrets.GITLAB_TOKEN }}:@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
-          git config --global url."https://${{ secrets.GITLAB_TOKEN }}:@gitlab.tu-dortmund.de/".insteadOf "https://gitlab.tu-dortmund.de/"
+          git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
+          git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "https://gitlab.tu-dortmund.de/"
 
       - name: Checkout repository including private submodules
         uses: actions/checkout@v3
