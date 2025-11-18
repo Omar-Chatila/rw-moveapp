@@ -10,15 +10,20 @@ jobs:
       contents: read
 
     steps:
-      - name: Configure GitLab auth rewrite
+      - name: Checkout repository without submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+
+      - name: Inject GitLab rewrite rule AFTER checkout
         run: |
           git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "git@gitlab.tu-dortmund.de:"
           git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.tu-dortmund.de/".insteadOf "https://gitlab.tu-dortmund.de/"
 
-      - name: Checkout repository including private submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
+      - name: Manually fetch private submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --depth 1
 
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v2
